@@ -1,0 +1,12 @@
+{
+  "name": "force-online",
+  "version": "1.0.0",
+  "description": "force your device online",
+  "main": "index.js",
+  "author": "yukihiratype2",
+  "license": "MIT",
+  "dependencies": {
+    "atob": "^2.1.2",
+    "jsonfile": "^5.0.0"
+  }
+}
