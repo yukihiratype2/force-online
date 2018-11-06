@@ -29,12 +29,12 @@
     "settings": {
       "vnext": [
         {
-          "address": "loop-ph-1.lanan.world",
+          "address": "turkey.lanan.world",
           "port": "443",
           "users": [
             {
-              "id": "b831381d-6324-4d53-ad4f-8cda48b30811",
-              "alterId": 64
+              "id": "fe7e0533-dd52-ff86-b8d0-142c6dd9af1e",
+              "alterId": "2"
             }
           ]
         }

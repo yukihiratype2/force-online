@@ -11,15 +11,15 @@ const config = require('./config.json');
     const vmessConfig = baseConfig
     vmessConfig.outbound.settings.vnext[0].address = vmess.add
     vmessConfig.outbound.settings.vnext[0].port = vmess.port
-    vmessConfig.outbound.settings.vnext[0].users.id = vmess.id
-    vmessConfig.outbound.settings.vnext[0].users.alterId = vmess.aid
+    vmessConfig.outbound.settings.vnext[0].users[0].id = vmess.id
+    vmessConfig.outbound.settings.vnext[0].users[0].alterId = vmess.aid
     try {
       fs.unlinkSync('./temp/config.json')
     } catch (e) {
       /* handle error */
     }
     jsonfile.writeFile('./temp/config.json', vmessConfig,{ spaces: 2 } , (err) => {
-      console.log('done');
+
     })
   }
 })()
