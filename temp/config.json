@@ -20,7 +20,7 @@
   ],
   "inbound": {
     "listen": "127.0.0.1",
-    "port": 1081,
+    "port": 1082,
     "protocol": "socks",
     "settings": {
       "auth": "noauth",
@@ -36,7 +36,7 @@
         "refresh": 5,
         "concurrency": 3
       },
-      "port": 8001,
+      "port": 8002,
       "protocol": "http",
       "tag": "httpDetour",
       "domainOverride": [
@@ -83,8 +83,8 @@
     "settings": {
       "vnext": [
         {
-          "address": "turkey.lanan.world",
-          "port": "443",
+          "address": "left-traffic.v2ray.group",
+          "port": 443,
           "users": [
             {
               "id": "fe7e0533-dd52-ff86-b8d0-142c6dd9af1e",
@@ -103,8 +103,8 @@
         "headers": {}
       },
       "tlsSettings": {
-        "serverName": "server.cc",
-        "allowInsecure": false
+        "serverName": "left-traffic.v2ray.group",
+        "allowInsecure": true
       },
       "httpSettings": {
         "path": "",
@@ -130,9 +130,7 @@
         "downlinkCapacity": 20
       },
       "network": "tcp",
-      "security": "none"
+      "security": "tls"
     }
   }
-}
-
 }

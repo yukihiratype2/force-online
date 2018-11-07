@@ -7,7 +7,10 @@
   "license": "MIT",
   "dependencies": {
     "atob": "^2.1.2",
+    "await-to-js": "^2.0.1",
+    "death": "^1.1.0",
     "jsonfile": "^5.0.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
   }
 }

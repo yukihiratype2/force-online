@@ -22,7 +22,7 @@
   ],
   "inbound" : {
     "listen" : "127.0.0.1",
-    "port" : 1081,
+    "port" : 1082,
     "protocol" : "socks",
     "settings" : {
       "auth" : "noauth",
@@ -38,7 +38,7 @@
         "refresh" : 5,
         "concurrency" : 3
       },
-      "port" : 8001,
+      "port" : 8002,
       "protocol" : "http",
       "tag" : "httpDetour",
       "domainOverride" : [
@@ -110,7 +110,7 @@
       },
       "tlsSettings" : {
         "serverName" : "server.cc",
-        "allowInsecure" : false
+        "allowInsecure" : true
       },
       "httpSettings" : {
         "path" : "",
