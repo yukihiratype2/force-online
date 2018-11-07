@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "atob": "^2.1.2",
-    "jsonfile": "^5.0.0"
+    "jsonfile": "^5.0.0",
+    "request": "^2.88.0"
   }
 }

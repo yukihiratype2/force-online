@@ -12,7 +12,6 @@ const config = require('./config.json');
     vmessConfig.outbound.settings.vnext[0].address = vmess.add
     vmessConfig.outbound.settings.vnext[0].port = vmess.port
     vmessConfig.outbound.settings.vnext[0].users[0].id = vmess.id
-    vmessConfig.outbound.settings.vnext[0].users[0].alterId = vmess.aid
     try {
       fs.unlinkSync('./temp/config.json')
     } catch (e) {

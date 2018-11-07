@@ -1,30 +1,84 @@
 {
+  "policy": {
+    "levels": {
+      "0": {
+        "uplinkOnly": 0
+      }
+    }
+  },
+  "dns": {
+    "servers": [
+      "localhost"
+    ]
+  },
+  "outboundDetour": [
+    {
+      "protocol": "freedom",
+      "tag": "direct",
+      "settings": {}
+    }
+  ],
   "inbound": {
-    "port": 2080,
+    "listen": "127.0.0.1",
+    "port": 1081,
     "protocol": "socks",
-    "domainOverride": [
-      "tls",
-      "http"
-    ],
     "settings": {
-      "auth": "noauth"
+      "auth": "noauth",
+      "udp": false,
+      "ip": "127.0.0.1"
     }
   },
   "inboundDetour": [
     {
+      "listen": "127.0.0.1",
+      "allocate": {
+        "strategy": "always",
+        "refresh": 5,
+        "concurrency": 3
+      },
+      "port": 8001,
+      "protocol": "http",
+      "tag": "httpDetour",
       "domainOverride": [
-        "tls",
-        "http"
+        "http",
+        "tls"
       ],
-      "port": 1085,
-      "protocol": "dokodemo-door",
+      "streamSettings": {},
       "settings": {
-        "network": "tcp,udp",
-        "followRedirect": true
+        "timeout": 0
       }
     }
   ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "IPIfNonMatch",
+      "rules": [
+        {
+          "domain": [
+            "localhost",
+            "geosite:cn"
+          ],
+          "type": "field",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "outboundTag": "direct",
+          "ip": [
+            "geoip:private",
+            "geoip:cn"
+          ]
+        }
+      ]
+    }
+  },
   "outbound": {
+    "sendThrough": "0.0.0.0",
+    "mux": {
+      "enabled": true,
+      "concurrency": 8
+    },
     "protocol": "vmess",
     "settings": {
       "vnext": [
@@ -34,15 +88,51 @@
           "users": [
             {
               "id": "fe7e0533-dd52-ff86-b8d0-142c6dd9af1e",
-              "alterId": "2"
+              "alterId": 2,
+              "security": "none",
+              "level": 0
             }
-          ]
+          ],
+          "remark": "bwg"
         }
       ]
     },
     "streamSettings": {
+      "wsSettings": {
+        "path": "",
+        "headers": {}
+      },
+      "tlsSettings": {
+        "serverName": "server.cc",
+        "allowInsecure": false
+      },
+      "httpSettings": {
+        "path": "",
+        "host": [
+          ""
+        ]
+      },
+      "tcpSettings": {
+        "header": {
+          "type": "none"
+        }
+      },
+      "kcpSettings": {
+        "header": {
+          "type": "none"
+        },
+        "mtu": 1350,
+        "congestion": false,
+        "tti": 50,
+        "uplinkCapacity": 5,
+        "writeBufferSize": 1,
+        "readBufferSize": 2,
+        "downlinkCapacity": 20
+      },
       "network": "tcp",
-      "security": "tls"
+      "security": "none"
     }
   }
+}
+
 }

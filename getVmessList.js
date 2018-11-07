@@ -22,7 +22,6 @@ exports.getVmessList = function (subscribe) {
             list.split('\r\n').map(item => {
               if (item) {
                 const server = JSON.parse(atob(item.substring(8)))
-                console.log(server);
                 vmessList.push(server)
               }
             })
