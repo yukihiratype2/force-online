@@ -6,9 +6,16 @@ const fs = require('fs')
 const getVmessList = require('./getVmessList')
 const baseConfig = require('./src/baseConfig.json')
 const config = require('./config.json');
+const kill = require('kill-port')
 
 const checkV2rayStarted = /(V2Ray )\d.\d( started)/;
 
+global.timeHandler = 0
+kill(config.httpPort).then(data => {
+  console.log('Find port in use,try to kill process');
+}).catch(e => {
+  console.log('Port is able to use');
+})
 
 // keep process handler
 let v2rayProcess
@@ -19,11 +26,13 @@ let v2rayProcess
 //v2rayPrcess.kill('SIGHUP')
 //stop v2ray when exit
 
+//check port in use
 
 ON_DEATH((singal, err) => {
   if (err) {
     console.log(err);
   }
+  clearTimeout(timeHandler)
   try {
     v2rayPrcess.kill('SIGHUP')
   } catch (e) {
@@ -39,6 +48,9 @@ function reloadV2rayAndTest(v2rayProcessHandler) {
     /* handle error */
   }
   v2rayProcessHandler = child_process.spawn('/usr/bin/v2ray/v2ray', [], { cwd: './temp' })
+  v2rayProcessHandler.on('close', (data) => {
+    console.log('v2ray Closed with code: ', data);
+  })
   return new Promise((reslove) => {
     v2rayProcessHandler.stdout.on('data', (data) => {
       console.log(data.toString('utf8'));
@@ -46,9 +58,6 @@ function reloadV2rayAndTest(v2rayProcessHandler) {
         testConnection(reslove)
       }
     })
-  })
-  v2rayProcessHandler.on('close', (data) => {
-    console.log('v2ray Closed with code: ', data);
   })
 }
 
@@ -118,25 +127,25 @@ generateConfig((processHandler) => {
 
 //check every 5min
 function continusTest() {
-  setTimeout(() => {
+  clearTimeout(timeHandler)
+  timeHandler = setTimeout(() => {
     testConnection((r) => {
       console.log(r);
       if (r) {
         console.log('server is useable')
-        continusTest()
+        continusTest(th)
       } else {
         console.log('server is down, choose a new server');
         generateConfig((processHandler) => {
           return reloadV2rayAndTest(processHandler)
         }, v2rayProcess)
-        continusTest()
+        continusTest(th)
       }
     })
   }, 1000*60*5)
 }
 
 continusTest()
-
 //(async() => {
 //const result = await reloadV2rayAndTest(v2rayProcess)
 //console.log(result, 'koko');
